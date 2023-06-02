@@ -42,7 +42,14 @@ const Nav = () => {
               Sign Out
             </button>
             <Link href="/profile">
-              <Image />
+              <Image
+              src={session?.user.image}
+              alt="Profile"
+              width={37}
+              height={37}
+              className="rounded-full"
+              onClick={() => { setToggleDropdown((prev) => !prev)}}
+            />
             </Link>
           </div>
         ) : (
@@ -69,7 +76,7 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               alt="Profile"
               width={37}
               height={37}

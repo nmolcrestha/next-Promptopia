@@ -11,7 +11,8 @@ const handler = NextAuth({
           clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
-    async session({session}){
+    callbacks: {
+      async session({session}){
         const sessionUser = await User.findOne({
             email: session.user.email
         })
@@ -21,11 +22,11 @@ const handler = NextAuth({
         return session;
     },
 
-    async signIn({profile}){
+    async signIn({ account, profile, user, credentials }) {
         try{
           await connects();
           //check user exist
-          const userExists = await User.finfOne({
+          const userExists = await User.findOne({
             email: profile.email
           });
           // not create a user
@@ -42,7 +43,10 @@ const handler = NextAuth({
             console.log(error);
             return false;
         }
+    },
+
     }
+
 })
 
 export {handler as GET , handler as POST};
